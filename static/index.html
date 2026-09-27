@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Job Hunter</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --text: #f8fafc;
+            --primary: #3b82f6;
+            --success: #10b981;
+            --error: #ef4444;
+            --border: #334155;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 750px;
+            width: 100%;
+            background-color: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+        }
+        h1 { margin-top: 0; font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .full-width { grid-column: span 2; }
+        label { display: block; margin-bottom: 0.5rem; font-size: 0.875rem; color: #94a3b8; }
+        input[type="text"], input[type="number"], input[type="file"] {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background-color: var(--bg);
+            color: var(--text);
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 0.85rem;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--primary);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .status-panel { display: none; margin-top: 1.5rem; }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            background-color: var(--border);
+            margin-bottom: 1rem;
+        }
+        .badge.active { background-color: var(--primary); }
+        .badge.success { background-color: var(--success); }
+        .badge.error { background-color: var(--error); }
+        
+        .terminal {
+            background-color: #000;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            height: 250px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+        }
+        .log-line { margin: 0.25rem 0; font-size: 0.875rem; color: #a1a1aa; }
+        .log-line::before { content: "> "; color: var(--primary); }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.875rem; }
+        th, td { padding: 0.5rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { color: #94a3b8; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Autonomous Job Application Agent</h1>
+        
+        <form id="huntForm">
+            <div class="form-grid">
+                <div class="full-width">
+                    <label>Upload Your CV (PDF)</label>
+                    <input type="file" id="cvFile" accept=".pdf" required>
+                </div>
+                <div>
+                    <label>Target Role Title</label>
+                    <input type="text" id="roleInput" placeholder="e.g. Python Engineer" required>
+                </div>
+                <div>
+                    <label>Target Location</label>
+                    <input type="text" id="locationInput" placeholder="e.g. Remote / New York" required>
+                </div>
+                <div class="full-width">
+                    <label>Max Jobs to Hunt & Apply</label>
+                    <input type="number" id="maxJobsInput" value="3" min="1" max="10" required>
+                </div>
+            </div>
+            <button type="submit" id="submitBtn">Launch Autonomous Job Search</button>
+        </form>
+
+        <div id="statusPanel" class="status-panel">
+            <div id="statusBadge" class="badge">INITIALIZING</div>
+            <div class="terminal" id="terminalLogs"></div>
+            
+            <div id="resultsTableContainer" style="margin-top: 1rem;">
+                <label>Job Execution Results</label>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Job URL</th>
+                            <th>Match Score</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('huntForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusPanel = document.getElementById('statusPanel');
+        const statusBadge = document.getElementById('statusBadge');
+        const terminalLogs = document.getElementById('terminalLogs');
+        const resultsBody = document.getElementById('resultsBody');
+
+        let pollInterval = null;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const cvFile = document.getElementById('cvFile').files[0];
+            const role = document.getElementById('roleInput').value.trim();
+            const location = document.getElementById('locationInput').value.trim();
+            const maxJobs = document.getElementById('maxJobsInput').value;
+
+            if (!cvFile) return alert("Please select a PDF CV.");
+
+            const formData = new FormData();
+            formData.append('cv_file', cvFile);
+            formData.append('role', role);
+            formData.append('location', location);
+            formData.append('max_jobs', maxJobs);
+
+            submitBtn.disabled = true;
+            statusPanel.style.display = 'block';
+            terminalLogs.innerHTML = '';
+            resultsBody.innerHTML = '';
+            updateBadge('STARTING...', 'active');
+
+            try {
+                const response = await fetch('/api/auto-hunt', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error('Failed to start hunt');
+
+                const data = await response.json();
+                appendLog(`Job Hunter active. ID: ${data.hunt_id}`);
+                startPolling(data.hunt_id);
+
+            } catch (err) {
+                updateBadge('ERROR', 'error');
+                appendLog(`Error: ${err.message}`);
+                submitBtn.disabled = false;
+            }
+        });
+
+        function startPolling(huntId) {
+            if (pollInterval) clearInterval(pollInterval);
+            
+            pollInterval = setInterval(async () => {
+                try {
+                    const res = await fetch(`/api/hunt-status/${huntId}`);
+                    if (!res.ok) throw new Error('Failed status fetch');
+                    
+                    const data = await res.json();
+                    
+                    if (data.status === 'COMPLETED') {
+                        updateBadge('COMPLETED', 'success');
+                        stopPolling();
+                    } else if (data.status === 'FAILED') {
+                        updateBadge('FAILED', 'error');
+                        stopPolling();
+                    } else {
+                        updateBadge(data.status, 'active');
+                    }
+
+                    terminalLogs.innerHTML = '';
+                    data.logs.forEach(log => appendLog(log, false));
+
+                    resultsBody.innerHTML = '';
+                    data.results.forEach(res => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td><a href="${res.url}" target="_blank" style="color:#3b82f6;">${res.url.substring(0, 30)}...</a></td>
+                            <td>${res.score}%</td>
+                            <td>${res.status}</td>
+                        `;
+                        resultsBody.appendChild(tr);
+                    });
+
+                } catch (err) {
+                    appendLog(`Polling error: ${err.message}`);
+                }
+            }, 2000);
+        }
+
+        function stopPolling() {
+            if (pollInterval) clearInterval(pollInterval);
+            submitBtn.disabled = false;
+        }
+
+        function updateBadge(text, type) {
+            statusBadge.textContent = text;
+            statusBadge.className = `badge ${type}`;
+        }
+
+        function appendLog(msg, scroll = true) {
+            const div = document.createElement('div');
+            div.className = 'log-line';
+            div.textContent = msg;
+            terminalLogs.appendChild(div);
+            if (scroll) terminalLogs.scrollTop = terminalLogs.scrollHeight;
+        }
+    </script>
+</body>
+</html>

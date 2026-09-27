@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "AI Job Copilot",
+  "version": "1.0",
+  "description": "Extracts job descriptions and generates tailored resumes via local AI.",
+  "permissions": ["activeTab", "scripting", "tabs"],
+  "host_permissions": ["http://127.0.0.1/*", "http://localhost/*"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

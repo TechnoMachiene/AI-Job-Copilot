@@ -1,0 +1,117 @@
+Abdullah Tauseef
+AI Automation Engineer | Python | LLM Applications | RAG | n8n | FastAPI
+abdullahtauseef988@gmail.com | +92-3185445125 | linkedin.com/in/abdullahtauseef988 | github.com/TechnoMachiene
+SUMMARY
+Computer Science graduate with hands-on experience building AI automation workflows, backend services, RAG
+systems, machine-learning applications, and conversational AI. I work primarily with Python, FastAPI, n8n, REST
+APIs, webhooks, SQL/PostgreSQL, embeddings, retrieval, and LLM APIs. My experience includes connecting busi-
+ness workflows to AI systems, building deterministic processing around model calls, validating inputs and outputs,
+and turning AI workflows into usable applications. I am particularly interested in agentic systems where state,
+retrieval, tools, and ordinary software logic work together rather than relying on an LLM for every step.
+TECHNICAL SKILLS
+Languages: Python, SQL, JavaScript, HTML/CSS
+Backend & APIs: FastAPI, Flask, REST APIs, HTTPX, webhooks, JSON, Jinja2
+AI/LLMs: OpenAI APIs, Gemini, Mistral AI, Hugging Face, LangChain, LangSmith, LLM application development
+RAG & Retrieval: RAG, embeddings, vector retrieval, semantic search, hybrid search, TF-IDF, cosine similarity,
+Sentence Transformers, cross-encoder reranking
+Automation & Agents: n8n, workflow orchestration, tool/function-calling workflows, structured outputs, AI
+agents, webhook-based workflows
+Data & ML: PostgreSQL, SQL Server, Supabase, Pandas, NumPy, Scikit-learn, XGBoost, Logistic Regression,
+PyTorch, TensorFlow/Keras
+Engineering: Git, Docker, Linux/WSL, input validation, error handling, debugging, testing, API integration
+EXPERIENCE
+NonchTech Feb 2026 – Aug 2026
+Founder / Technical Lead Remote
+• Designed and implemented AI automation and software solutions around client business workflows, translating
+requirements into backend services, web applications, and automated processes.
+• Built and maintained n8n workflows integrating AI models, webhooks, email, Google Sheets, and external services
+for lead capture, processing, and outreach.
+• Developed Python/FastAPI components and API integrations where workflow logic required custom code rather
+than only no-code nodes.
+• Worked across requirements, implementation, testing, debugging, and delivery, with a focus on practical automa-
+tion rather than standalone AI demos.
+Upwork Jun 2025 – Present
+Freelance AI / Software Developer Remote
+• Built AI, automation, backend, and machine-learning solutions based on individual project requirements.
+• Developed Python APIs, data-processing workflows, AI integrations, and ML applications using FastAPI, Flask,
+Pandas, Scikit-learn, and LLM APIs.
+• Worked directly on debugging, integration, implementation, and adapting technical solutions to changing project
+requirements.
+Aizonix Jul 2025 – Oct 2025
+AI Developer Remote
+• Developed FastAPI services and AI applications involving document retrieval, RAG, embeddings, and vector-based
+search.
+• Worked with hybrid retrieval and cross-encoder reranking to improve document retrieval pipelines.
+• Integrated AI components into backend applications and contributed to debugging, testing, and code reviews.
+MCS, NUST Jun 2024 – Sep 2024
+Web Developer Islamabad, Pakistan
+• Developed a hospital appointment scheduling module using ASP.NET Core and SQL Server.
+• Worked on backend functionality, database interaction, and web application implementation.
+Schlumberger (SLB) Jul 2023 – Oct 2023
+IT Infrastructure Intern Islamabad, Pakistan
+• Assisted with debugging and troubleshooting enterprise IT infrastructure issues.
+SELECTED AI & AUTOMATION PROJECTS
+AI Lead Capture & Personalized Email Automation n8n, Gemini, Google Sheets, Spacemail
+• Built a workflow where a website chatbot captures leads, stores structured lead information in Google Sheets, and
+passes leads into an automated email workflow.
+• Used n8n to orchestrate lead processing, AI-generated personalization, and email delivery through Spacemail.
+• Designed the workflow around structured lead data and explicit automation steps rather than sending the entire
+workflow to an LLM.
+AI-Powered Sales Assistant & Lead Scoring Platform Python, FastAPI, n8n, Scikit-learn, SQL
+• Built a FastAPI application combining document-grounded question answering with ML-based lead-conversion
+prediction.
+• Integrated an n8n AI workflow through webhooks and implemented a local TF-IDF/cosine-similarity retrieval
+fallback.
+• Trained a Logistic Regression model using sales and engagement features, with preprocessing including missing-
+value handling, datetime feature extraction, categorical encoding, and stratified splitting.
+• Added SQL analysis for conversion rates and duplicate-lead detection, plus input validation and structured JSON
+API responses.
+Document-Based RAG Chatbot n8n, Supabase, OpenAI, Embeddings
+• Built a document ingestion and question-answering workflow using embeddings and vector retrieval.
+• Worked with hybrid search and cross-encoder reranking to improve retrieval of relevant document context before
+generating responses.
+• Connected ingestion, retrieval, model calls, and response handling through an automated workflow.
+Real-Time Voice AI Lead Qualification Agent Python, LiveKit Agents SDK, Webhooks
+• Built a real-time voice agent that asks context-aware qualification questions and collects structured lead informa-
+tion.
+• Implemented tool-based workflow execution, interruption-aware dialogue handling, call termination logic, and
+webhook-based reporting.
+• Structured collected information for downstream processing rather than relying on unstructured conversation
+output.
+Data Analysis Agent FastAPI, PostgreSQL/CSV, Mistral AI, Pandas/PandasAI
+• Built a conversational data-analysis application where users load datasets and request analysis through natural
+language.
+• Used a FastAPI backend and Mistral AI to interpret requests and generate Python analysis code, with Pan-
+das/PandasAI used for data processing.
+Move-in / Move-out Inspection Automator FastAPI, n8n, JavaScript, jsPDF
+• Built a property-inspection application with structured inspection workflows and automated PDF report genera-
+tion.
+• Connected application logic with n8n workflows for repeatable processing and reporting.
+Sales Forecasting Pipeline Python, XGBoost, Pandas, Scikit-learn
+• Built a sales forecasting pipeline covering data preparation, feature processing, model training, and evaluation.
+• Achieved a 32.6% reduction in RMSE during project evaluation.
+RESEARCH & PUBLICATION
+A Dual-Path Diagnostic Framework for Alzheimer’s Disease Using MRI-Based Deep Learning and
+Clinical Data with XGBoost
+• Research paper accepted for presentation at the 2nd International Conference on the Evaluation of Arti-
+ficial Intelligence (ICEAI-2026), UET Mardan.
+• Developed a dual-path diagnostic framework combining MRI-based deep learning with clinical-data-based XG-
+Boost prediction.
+• The work involved deep learning for MRI-based diagnosis and machine learning using clinical data, integrating
+complementary diagnostic approaches.
+• Paper accepted for presentation; final/camera-ready revisions are currently in progress.
+EDUCATION
+National University of Technology (NUTECH), Islamabad
+B.Sc. Computer Science Nov 2021 – Jul 2025
+CGPA: 2.85 / 4.00
+Taleem-ul-Qur’an – Al-Huda International (AIM)
+Tajweed, Translation and Tafseer of the Holy Quran Sep 2025 – Aug 2026
+Grade: A
+CERTIFICATIONS
+Machine Learning Certification — Codebasics
+Agentic AI Certification — Codebasics
+RELEVANT FOCUS
+Business workflow automation AI agents and tool workflows
+API/webhook integrations RAG and knowledge retrieval
+Structured data and stateful processing LLM application development
+Backend services with Python/FastAPI Lead capture, scoring and outreach
